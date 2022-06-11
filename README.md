@@ -128,3 +128,6 @@ Head to testnets.opensea.io. Search for your contract address which is the addre
 
 Here's my NFT on OpenSea: https://testnets.opensea.io/collection/dakshnft
 <img src="https://i.imgur.com/fpo2Dwh.png">
+
+# What's next?
+Blockchain is all about decentralization, and trustless network but here we depend on imgur for our images to stay alive and we also depend on json keeper for our json metadata to stay intact. These two are centralized organization, no one would love to lose their image or no dev wants to lose their metadata just becaue these two orgs go down. How to tackle this check [here]().
