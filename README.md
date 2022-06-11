@@ -114,7 +114,9 @@ Finally, let's deploy our updated contract, mint the NFT, and make sure it works
 npx hardhat run scripts/deploy.js --network rinkeby
 ```
 Everything worked fine, we removed centralization and made our stuff remain on-chain.
+
 **BUT BUT**
+
 NFTs are Non Fungible Token which means all the tokens have unique attribute and are completely different but here we are deploying only one NFT, so why would a user mint them if everyone has the same NFT??
 
 # Dynamically generating SVG NFTs on-chain
