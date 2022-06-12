@@ -54,7 +54,11 @@ data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIH
 
 We turned our SVG code into a nice string :). base64 is basically an accepted standard for encoding data into a string. So when we say data:image/svg+xml;base64 it's basically saying, "Hey, I'm about to give you base64 encoded data please process it as a SVG, thank you!".
 
-Take that whole string data:image/svg+xml;base64,INSERT_YOUR_BASE64_ENCODED_SVG_HERE and paste it in your browser's address bar and boom you'll see the SVG! Note: if you get an error, double-check you followed all the steps properly. It's easy to mess up :).
+Take that whole string 
+```
+data:image/svg+xml;base64,INSERT_YOUR_BASE64_ENCODED_SVG_HERE
+``` 
+and paste it in your browser's address bar and boom you'll see the SVG! Note: if you get an error, double-check you followed all the steps properly. It's easy to mess up :).
 
 Okay, epic. This is a way to keep our NFTs image data permanent and available forever. All the data centers in the world can burn down but since we have this base64 encoded string, we would always see the SVG as long as we have a computer and a browser.
 
