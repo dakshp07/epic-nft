@@ -1,0 +1,201 @@
+.App{
+    height: 100vh;
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    overflow: scroll;
+    text-align: center;
+    overflow-x: hidden;
+    /* overflow-y: hidden; */
+}
+.container{
+    height: 100%;
+    background-attachment: #0d1116;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.header-container{
+    padding-top: 30px;
+}
+.header{
+    margin: 0;
+    font-size: 50px;
+    font-weight: bold;
+}
+.header-top{
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);
+    overflow: hidden;
+    padding: 10px;
+    font-family: -apple-system, Inter, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+.header-top h3{
+    background: linear-gradient(90deg, rgba(129,255,0,1) 0%, rgba(0,211,255,1) 100%);
+    background-clip: text;
+    float: left;
+    text-align: center;
+    padding: 0px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 30px;
+    font-family: -apple-system, Inter, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+.header-top button{
+    float: right;
+    text-align: center;
+    margin-top: 30px;
+    /* padding-top: 10px; */
+    width: 200px;
+    height: 50px;
+    background: linear-gradient(90deg, rgba(129,255,0,1) 0%, rgba(0,211,255,1) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 20px;
+    border-radius: 10px;
+    background-size: 200% 200%;
+    font-weight: bolder;
+    width: 10em; /* the element needs a fixed width (in px, em, %, etc) */
+    overflow: hidden; /* make sure it hides the content that overflows */
+    white-space: nowrap; /* don't break the line */
+    text-overflow: ellipsis; /* give the beautiful '...' effect */
+}
+.sub-text{
+    font-size: 25px;
+    color: white;
+    font-weight: 800;
+}
+.mint-text{
+    font-size: 15px;
+    color: white;
+    font-weight: 800;
+}
+.gradient-text{
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.connect-wallet-button{
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);;
+    background-size: 200% 200%;
+    animation: gradient-animation 4s ease infinite;
+    margin-right: 15px;
+    width: 200px;
+    height: 50px;
+    font-family: -apple-system, Inter, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    color: white;
+    font-size: 20px;
+    font-weight: bolder;
+    border-radius: 10px;
+}
+.connect-wallet-button:hover{
+    cursor: pointer;
+}
+.connect-wallet-button-collected{
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%);;
+    background-size: 200% 200%;
+    animation: gradient-animation 4s ease infinite;
+    margin-right: 15px;
+    width: 350px;
+    height: 50px;
+    font-family: -apple-system, Inter, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    color: white;
+    font-size: 20px;
+    font-weight: bolder;
+    border-radius: 10px;
+}
+.connect-wallet-button-collected:hover{
+    cursor: pointer;
+}
+.mint-button{
+    background: -webkit-linear-gradient(left, #a200d6, #ff6fdf);
+    background-size: 200% 200%;
+    animation: gradient-animation 4s ease infinite;
+    margin-right: 15px;
+}
+.mint-button:hover{
+    cursor: pointer;
+}
+.opensea-button{
+    background-color: rgb(32, 129, 226);
+}
+.mint-count{
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+.footer-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 30px;
+    color: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
+.twitter-logo{
+    width: 35px;
+    height: 35px;
+    color: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
+.open-logo{
+    width: 35px;
+    height: 35px;
+    color: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+    padding-left: 100px;
+}
+.footer-text{
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    display: flex;
+}
+.footer-text-down{
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    padding-left: 10px;
+    text-align: center;
+}
+
+/* KeyFrames */
+@-webkit-keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+}
+@-moz-keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+}
+@keyframes gradient-animation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+}
