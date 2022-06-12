@@ -8,6 +8,9 @@ import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
 
 contract MyEpicNFT is ERC721URIStorage{
+    // max supply will be 10
+    uint256 maxSupply=10;
+
     // This is our SVG code. All we need to change is the word that's displayed. Everything else stays the same.
     // So, we make a baseSvg variable here that all our NFTs can use.
     string baseSvg="<svg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMinYMin meet' viewBox='0 0 350 350'><style>.base { fill: white; font-family: serif; font-size: 24px; }</style><rect width='100%' height='100%' fill='black' /><text x='50%' y='50%' class='base' dominant-baseline='middle' text-anchor='middle'>";
@@ -17,6 +20,13 @@ contract MyEpicNFT is ERC721URIStorage{
     string[] firstWords = ["Pizza", "Burger", "Rolls", "Drinks", "Nachos", "Bread"];
     string[] secondWords = ["Portugal", "Italy", "Germany", "Argentina", "Wales", "Brazil"];
     string[] thirdWords = ["Ronaldo", "Bonucci", "Muller", "Messi", "Bale", "Neymar"];
+
+    // let's make some events so that we can give user the opensea link on frontend
+    // format of one nft link: https://testnets.opensea.io/assets/INSERT_CONTRACT_ADDRESS_HERE/INSERT_TOKEN_ID_HERE
+    event NewEpicNFTMinted(address sender, uint256 tokenID);
+
+    // event for total no of minted nfts
+    event getTotalNFTsMintedSoFar(uint256 maxSupply, uint256 currentSupply);
 
     // in the next line we use the stuff given to us by OpenZeppelin to help us keep a track of tokenIDs
     using Counters for Counters.Counter;
@@ -60,6 +70,9 @@ contract MyEpicNFT is ERC721URIStorage{
     function makeEpicNFT() public {
         // get the current tokenID, it starts at 0
         uint256 newId=tokenid.current();
+
+        // set max limit to reach
+        require(newId<maxSupply, "Max Limit Reached");
 
         // We go and randomly grab one word from each of the three arrays.
         string memory first = pickRandomFirstWord(newId);
@@ -107,7 +120,21 @@ contract MyEpicNFT is ERC721URIStorage{
         _setTokenURI(newId, finalTokenUri);
         // log the NFT details
         console.log("a NFT with ID %s has been minted to %s", newId, msg.sender);
+        // emit the event
+        emit NewEpicNFTMinted(msg.sender, newId);
+        // emit the current supply event
+        emit getTotalNFTsMintedSoFar(maxSupply, newId);
         // increment the tokenID for which the next NFT will be minted
         tokenid.increment();
+    }
+
+    // function to get the current no of NFTs
+    function getCurrentTotalNFTs() public view returns (uint256) {
+        return tokenid.current();
+    }
+
+    // function to get the total no of NFTs
+    function getTotalNFTs() public view returns (uint256) {
+        return maxSupply;
     }
 }

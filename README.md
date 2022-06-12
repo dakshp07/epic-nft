@@ -1,151 +1,150 @@
 # Make EpicNFT
-In our last [branch](https://github.com/dakshp07/epic-nft/tree/master) we learnt how to mint an NFT, and we also deployed our contract to mint NFT on Rinkeby testnet and successfully minted two nft which are now available on open sea for testnets.
+In our last [branch](https://github.com/dakshp07/epic-nft/tree/onchain-random) we learnt how to mint an random NFT that too on chain and not depending on things like imgur, json keeper and shit. Now we move ahead and use react to deploy it on the frontend for the users to mint the NFTs and give some extra features.
 
-**BUT!**
+# Connect wallet to web app
+## Using window.ethereum()
 
-We have a big problem right now with our NFTs.
+So, in order for our website to talk to the blockchain, we need to somehow connect our wallet to it. Once we connect our wallet to our website, our website will have permission to call smart contracts on our behalf. **Remember, it's just like authenticating into a website.**
 
-What happens if imgur goes down? Well — then our `image` link is absolutely useless and our NFT is lost and our image is lost! Even worse, what happens if that website that hosts the JSON file goes down? Well — then our NFT is completely broken because the metadata wouldn't be accesible.
+Head over Replit and go to `App.js` under `src`, this is where we'll be doing all our work.
 
-One way to fix this problem is to store all our NFT data "on-chain" meaning the data lives on the contract itself vs in the hands of a third-party. This means our NFT will truly be permanent :). In this case, the only situation where we lose our NFT data is if the blockchain itself goes down. And if that happens — well then we have bigger problems!
+If we're logged in to Metamask, it will automatically inject a special object named `ethereum` into our window that has some magical methods. Let's check if we have that first.
 
-But, assuming the blockchain stays up forever — our NFT will be up forever! This is very appealing because it also means if you sell an NFT, the buyer can be confident the NFT won't break. Many popular projects use on-chain data, [Loot](https://techcrunch.com/2021/09/03/loot-games-the-crypto-world/?utm_source=buildspace.so&utm_medium=buildspace_project) is one very popular example!
+**Check all the comments in the code to understand the changes**
 
-# What the heck are SVGs?
-A common way to store NFT data for images is using a SVG. A SVG is an image, but the image itself is built with code.
+## See if we can access the user's account
+So when you run this, you should see that line "We have the Ethereum object" printed in the console of the website when you go to inspect it. If you are using Replit, make sure you're looking at the console of your project website, not the Replit workspace! You can access the console of your website by opening it in its own window/tab and launching the developer tools.
 
-For example, here's a really simple SVG that renders a black box with some white text in the middle.
+Next, we need to actually check if we're authorized to actually access the user's wallet. Once we have access to this, we can call our smart contract!
 
-```html
-<svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet" viewBox="0 0 350 350">
-    <style>.base { fill: white; font-family: serif; font-size: 14px; }</style>
-    <rect width="100%" height="100%" fill="black" />
-    <text x="50%" y="50%" class="base" dominant-baseline="middle" text-anchor="middle">EpicLordHamburger</text>
-</svg>
+Basically, Metamask doesn't just give our wallet credentials to every website we go to. It only gives it to websites we authorize. Again, it's just like logging in! But, what we're doing here is checking if we're "logged in".
+
+**Check all the comments in the code to understand the changes**
+
+## Build a connect wallet button
+When you run the above code, the console.log that prints should be `No authorized account found`. Why? Well because we never explicitly told Metamask, "hey Metamask, please give this website access to my wallet".
+
+We need to create a `connectWallet` button. In the world of Web3, connecting your wallet is literally a "Login" button for your user.
+
+Ready for the easiest "login" experience for your life :)?
+
+**Check all the comments in the code to understand the changes**
+
+# Create a button to call contract and mint NFT
+## Mint NFT through our website
+
+Awesome. We made it. We've deployed our website. We've deployed our contract. We've connected our wallet. **Now we need to actually call our contract from our web app** using the credentials we have access to now from Metamask!
+
+So, remember, our contract has the function `makeAnEpicNFT` which will actually mint the NFT. We'll need to now call this function from our web app. Go ahead and add the following function under the `connectWallet` function.
+
+**Check all the comments in the code to understand the changes**
+
+# A note on contract redeploys!!
+Let's say you want to change your contract. You'd need to do 3 things:
+
+- We need to deploy it again.
+
+- We need to update the contract address on our frontend.
+
+- We need to update the abi file on our frontend.
+
+- People constantly forget to do these 3 steps when they change their contract. Don't forget lol.
+
+Why do we need to do all this? Well, it's because smart contracts are immutable. They can't change. They're permanent. That means changing a contract requires a full redeploy. This will also reset all the variables since it'd be treated as a brand new contract. That means we'd lose all our NFT data if we wanted to update the contract's code.
+
+Contract on Etherscan: https://rinkeby.etherscan.io/address/0x1574a1f0747b11B0E38BadA85e49aA0688fFba7b
+NFTs Contract on OpenSea: https://testnets.opensea.io/collection/dakshnft-ihvavhwn3h 
+
+# Finishing touches to web app
+## Give user their OpenSea link
+One thing that’d be awesome is after the NFT is minted we actually give a link to their NFT on OpenSea that they’d be able to share on Twitter or with their friends!!
+
+The link for an NFT on OpenSea looks like this:
+```
+https://testnets.opensea.io/assets/0x88a3a1dd73f982e32764eadbf182c3126e69a5cb/9
 ```
 
-Head to [this](https://www.svgviewer.dev/?utm_source=buildspace.so&utm_medium=buildspace_project) website and paste in the code above to see it. Feel free to mess around with it.
-
-This is really cool because it lets us create images with code.
-
-SVGs can be customized a lot. 
-
-# What are we exactly going to do now?
-First, we're going to learn how to get all our NFT data on-chain. Our NFT is simply going to be a box with a funny three-word combo at the center. Just like the SVG above. We're going to hardcode the SVG above in our contract that says "EpicLordHamburger".
-
-After that, we're going to learn how to dynamically generate these NFTs on our contract. So, every time someone mints an NFT they'll get a different, hilarious three-word combo. For example:
-
-- EpicLordHamburger
-- NinjaSandwichBoomerang
-- SasukeInterstellarSwift
-
-It's going to be epic :). Let's do this!
-
-# Mint NFTs with static SVGs
-Next, we want a way to somehow get this data in our NFT without hosting it somewhere like imgur (which can go down or die at any moment!). Head to [this](https://www.utilities-online.info/base64?utm_source=buildspace.so&utm_medium=buildspace_project) website. Paste in your full SVG code above and then click "encode" to get your base64 encoded SVG. Now, ready for some magic? Open a new tab. And in the URL bar paste this:
-
+Basically, these are the variables.
 ```
-data:image/svg+xml;base64,INSERT_YOUR_BASE64_ENCODED_SVG_HERE
-```
-So for example, mine looks like this:
-```
-data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiIHZpZXdCb3g9IjAgMCAzNTAgMzUwIj4NCiAgICA8c3R5bGU+LmJhc2UgeyBmaWxsOiB3aGl0ZTsgZm9udC1mYW1pbHk6IHNlcmlmOyBmb250LXNpemU6IDE0cHg7IH08L3N0eWxlPg0KICAgIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9ImJsYWNrIiAvPg0KICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBjbGFzcz0iYmFzZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXBpY0xvcmRIYW1idXJnZXI8L3RleHQ+DQo8L3N2Zz4=
+https://testnets.opensea.io/assets/INSERT_CONTRACT_ADDRESS_HERE/INSERT_TOKEN_ID_HERE
 ```
 
-We turned our SVG code into a nice string :). base64 is basically an accepted standard for encoding data into a string. So when we say data:image/svg+xml;base64 it's basically saying, "Hey, I'm about to give you base64 encoded data please process it as a SVG, thank you!".
+We’re going to be using something called `Events` in Solidity. These are sorta like webhooks. Lets write out some of the code and get it working first!
 
-Take that whole string 
+Add this line under the line where you create your three arrays with your random words!
 ```
-data:image/svg+xml;base64,INSERT_YOUR_BASE64_ENCODED_SVG_HERE
-``` 
-and paste it in your browser's address bar and boom you'll see the SVG! Note: if you get an error, double-check you followed all the steps properly. It's easy to mess up :).
-
-Okay, epic. This is a way to keep our NFTs image data permanent and available forever. All the data centers in the world can burn down but since we have this base64 encoded string, we would always see the SVG as long as we have a computer and a browser.
-
-<img src="https://i.imgur.com/f9mXVSb.png">
-
-# Let's get rid of our JSON Data
-Remember our JSON metadata?
-
-Well, I changed it just a little bit for our three-word NFTs :). Same thing! A name, description, and image. But now instead of pointing to an imgur link, we point to our base64 encoded string.
-```json
-{
-    "name": "EpicLordHamburger",
-    "description": "An NFT from the highly acclaimed square collection",
-    "image": "data:image/svg+xml;base64,INSERT_YOUR_BASE64_ENCODED_SVG_HERE"
-}
-```
-Note: don't forget the quotation marks around the `data:image/svg+xml;base64,INSERT_YOUR_BASE64_ENCODED_SVG_HERE`.
-
-For example, mine looks like this:
-```json
-{
-    "name": "EpicLordHamburger",
-    "description": "An NFT from the highly acclaimed square collection",
-    "image": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiIHZpZXdCb3g9IjAgMCAzNTAgMzUwIj4NCiAgICA8c3R5bGU+LmJhc2UgeyBmaWxsOiB3aGl0ZTsgZm9udC1mYW1pbHk6IHNlcmlmOyBmb250LXNpemU6IDE0cHg7IH08L3N0eWxlPg0KICAgIDxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9ImJsYWNrIiAvPg0KICAgIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBjbGFzcz0iYmFzZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RXBpY0xvcmRIYW1idXJnZXI8L3RleHQ+DQo8L3N2Zz4="
-}
-```
-**But wait — where will our fancy new JSON file go? We are not yet done, we were dependent on json keeper for our json data but lets change that too. How?**
-
-Right now, we host it on [this](https://jsonkeeper.com/?utm_source=buildspace.so&utm_medium=buildspace_project) random website. If that website goes down, our beautiful NFT is gone forever! Here's what we're going to do. **We're going to base64 encode our entire JSON file. Just like we encoded our SVG.**
-
-Head to [this](https://www.utilities-online.info/base64?utm_source=buildspace.so&utm_medium=buildspace_project) website again. Paste in your full JSON metadata with the base64 encoded SVG (should look sorta like what I have above) and then click "encode" to get you encoded JSON.
-
-Open a new tab. And in the URL bar paste this:
-```
-data:application/json;base64,INSERT_YOUR_BASE64_ENCODED_JSON_HERE
-```
-For example, mine looks like this:
-```
-data:application/json;base64,ewogICAgIm5hbWUiOiAiRXBpY0xvcmRIYW1idXJnZXIiLAogICAgImRlc2NyaXB0aW9uIjogIkFuIE5GVCBmcm9tIHRoZSBoaWdobHkgYWNjbGFpbWVkIHNxdWFyZSBjb2xsZWN0aW9uIiwKICAgICJpbWFnZSI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITjJaeUI0Yld4dWN6MGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TUM5emRtY2lJSEJ5WlhObGNuWmxRWE53WldOMFVtRjBhVzg5SW5oTmFXNVpUV2x1SUcxbFpYUWlJSFpwWlhkQ2IzZzlJakFnTUNBek5UQWdNelV3SWo0TkNpQWdJQ0E4YzNSNWJHVStMbUpoYzJVZ2V5Qm1hV3hzT2lCM2FHbDBaVHNnWm05dWRDMW1ZVzFwYkhrNklITmxjbWxtT3lCbWIyNTBMWE5wZW1VNklERTBjSGc3SUgwOEwzTjBlV3hsUGcwS0lDQWdJRHh5WldOMElIZHBaSFJvUFNJeE1EQWxJaUJvWldsbmFIUTlJakV3TUNVaUlHWnBiR3c5SW1Kc1lXTnJJaUF2UGcwS0lDQWdJRHgwWlhoMElIZzlJalV3SlNJZ2VUMGlOVEFsSWlCamJHRnpjejBpWW1GelpTSWdaRzl0YVc1aGJuUXRZbUZ6Wld4cGJtVTlJbTFwWkdSc1pTSWdkR1Y0ZEMxaGJtTm9iM0k5SW0xcFpHUnNaU0krUlhCcFkweHZjbVJJWVcxaWRYSm5aWEk4TDNSbGVIUStEUW84TDNOMlp6ND0iCn0=
-```
-When you paste that full URI into your browsers address bar, you'll see the full JSON in all it's glory. **BOOOOOM!** Now we have a way to keep our JSON metadata permanent and available forever.
-
-Here's a screenshot of mine:
-
-<img src="https://i.imgur.com/y1ZaYGf.png">
-
-# Change our contract, deploy
-Okay awesome, we've got this fancy base64 encoded JSON file. How do we get it on our contract? Simple head to `MyEpicNFT.sol` and — we just copy-paste the whole big string into our contract.
-
-We just need to change one line.
-```
-_setTokenURI(newItemId, "data:application/json;base64,INSERT_BASE_64_ENCODED_JSON_HERE")
+event NewEpicNFTMinted(address sender, uint256 tokenId);
 ```
 
-Finally, let's deploy our updated contract, mint the NFT, and make sure it works properly on OpenSea! Deploy using the same command. I changed my deploy script a little to only mint one NFT instead of two, feel free to do the same!
+Then, add this line at very bottom of the `makeAnEpicNFT` function, so, this is the last line in the function:
 ```
-npx hardhat run scripts/deploy.js --network rinkeby
+emit NewEpicNFTMinted(msg.sender, newItemId);
 ```
-Everything worked fine, we removed centralization and made our stuff remain on-chain.
 
-**BUT BUT**
+At a basic level, events are messages our smart contracts throw out that we can capture on our client in real-time. In the case of our NFT, just because our transaction is mined **does not mean the transaction resulted in the NFT being minted**. It could have just error’d out!! Even if it error’d out, it would have still been mined in the process.
 
-NFTs are Non Fungible Token which means all the tokens have unique attribute and are completely different but here we are deploying only one NFT, so why would a user mint them if everyone has the same NFT??
+Thats why I use events here. I’m able to `emit` an event on the contract and then capture that event on the frontend. Notice in my `event` I send the `newItemId` which we need on the frontend, right :)?
 
-# Dynamically generating SVG NFTs on-chain
-## Randomly generate words on an image
-Cool — we created a contract that's now minting NFTs all on-chain. But, it's still always the same NFT argh!!! Let's make it dynamic.
-**I wrote out all the code with comments in the solidity contract file which will generate an SVG with a combination of three random words.**
+Again, it’s sorta like a web hook. Except this is going to be the easiest webhook ever to setup lol.
 
-**All the comments in the solidity code explains everything!!**
+**AGAIN RE-DEPLOY CONTRACT!!!**
+As always when we change our contract.
 
-# Deploy to Rinkeby
-The coolest part is we can just re-deploy without changing our script using:
-```
-npx hardhat run scripts/deploy.js --network rinkeby
-```
-Once we redeploy, you'll be able to see your NFTs on https://testnets.opensea.io/ once you search the newly deployed contract address. 
+- Redeploy.
+- Update contract address in `App.js`.
+- Update ABI file on the web app.
+- If you mess any of this up, you will get errors :).
 
-My contract on Rinkeby: https://rinkeby.etherscan.io/address/0xAbA4d9454D47c76506202F389248Cb8a2710062F
+# Colorful backgrounds!
+Just for fun, I changed the contract to randomly pick a colorful background. I'm not going to go over the code here because it was just for fun but feel free to see the comments [here](https://gist.github.com/farzaa/b3b8ec8aded7e5876b8a1ab786347cc9?utm_source=buildspace.so&utm_medium=buildspace_project). Remember if you change the contract you'll need to re-deploy, update the abi, and update the contract address. 
 
-Minted NFTs on OpenSea Testnet: https://testnets.opensea.io/collection/dakshnft-v3
+**NOT DONE BY ME IN THIS CONTRACT!**
+
+# Set a limit on the # of minted NFTs
+So, I challenge you to change your contract to only allow a set # of NFTs to be minted (for example, maybe you want only 50 NFTs to be minted max!!). It'd be even more epic if on your website it said something like `4/50 NFTs minted so far` or something like that to make your user feel super special when they get an NFT!!!
+
+Hint, you'll need something in solidity called `require`. And, you'll like also need to create a function like `getTotalNFTsMintedSoFar` for your web app to call.
+
+**Check all the comments in the code to understand the changes**
+
+# Alert user when they’re on the wrong network
+Your website is only going to work on Rinkeby (since that's where your contract lives).
+
+We're going to to add a nice message telling users about this!
+
+For that, we make a RPC request to the blockchain to see the ID of the chain our wallet connects to. (Why a chain and not a network? [Good question](https://ethereum.stackexchange.com/a/37571t)!)
+
+We have already addressed requests to the blockchain. We used `ethereum.request` with the methods `eth_accounts` and `eth_requestAccounts`. Now we use `eth_chainId` to get the ID.
+
+There, now the user will know if they are on the wrong network! The request conforms to [EIP-695](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-695.md?utm_source=buildspace.so&utm_medium=buildspace_project) so it returns the hex value of the network as a string. You can find the IDs of other networks [here](https://docs.metamask.io/guide/ethereum-provider.html#chain-ids?utm_source=buildspace.so&utm_medium=buildspace_project).
+
+# Add a button to let people see the collection!
+Perhaps the most important part!
+
+Usually, when people want to see an NFT collection, they look at it on OpenSea!! It's a super-easy way for people to get a feel for your collection. So if you link your friend your site, they'll know it's legit!!
+
+Add a little button that says "🌊 View Collection on OpenSea" and then when your users clicks it, it links to your collection! Remember, your collections link changes every time you change the contract. So be sure to link your latest and final collection. For example, this is my collection.
+
+Note: This link you'll need to hardcode. I left a variable at the top for you to fill in. It can't be dynamically generated unless you use the OpenSea API (which is overkill for now lol).
 
 # Output:
-<img src="https://i.imgur.com/AFMS8E4.png">
+Contract Deployed
+<img src="https://i.imgur.com/ii5U87P.png">
 
+OpenSea Page
+<img src="https://i.imgur.com/IQpLM2n.png">
 
-<img src="https://i.imgur.com/NXc5G6K.png">
+Frontend
+<img src="https://i.imgur.com/Ln9DQFg.png">
+
+Contract on Etherscan: https://rinkeby.etherscan.io/address/0x1574a1f0747b11B0E38BadA85e49aA0688fFba7b
+NFTs Contract on OpenSea: https://testnets.opensea.io/collection/dakshnft-ihvavhwn3h 
+
+# Video Output
+<img src="assets/output.gif">
 
 # What's next?
-We are doing all the things (ie deploying, minting the NFT) by executing our `deploy.js` file but for users to mke their own NFTs we need a good frontend. We will be now building a frontend using our very own ReactJS. Check out [here]().
+Learn about IPFS
+Verify Contract on Etherscan
+and More
+Check [here](https://buildspace.so/p/mint-nft-collection/lessons/LE8ed42760-6bec-415a-b2bc-4987858c99ad)
