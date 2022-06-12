@@ -148,4 +148,4 @@ Minted NFTs on OpenSea Testnet: https://testnets.opensea.io/collection/dakshnft-
 <img src="https://i.imgur.com/NXc5G6K.png">
 
 # What's next?
-We are doing all the things (ie deploying, minting the NFT) by executing our `deploy.js` file but for users to mke their own NFTs we need a good frontend. We will be now building a frontend using our very own ReactJS. Check out [here]().
+We are doing all the things (ie deploying, minting the NFT) by executing our `deploy.js` file but for users to mke their own NFTs we need a good frontend. We will be now building a frontend using our very own ReactJS. Check out [here](https://github.com/dakshp07/epic-nft/tree/frontend-code).
