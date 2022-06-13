@@ -147,5 +147,6 @@ NFTs Contract on OpenSea: https://testnets.opensea.io/collection/dakshnft-ihvavh
 - Learn about IPFS
 - Verify Contract on Etherscan
 - The NFTs still have some backgroun colors (ie black) lets make that random too, now we gonna get completely unique NFTs :)
-and More
+- and More
+
 Check [here](https://buildspace.so/p/mint-nft-collection/lessons/LE8ed42760-6bec-415a-b2bc-4987858c99ad)
