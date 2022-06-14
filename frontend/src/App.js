@@ -8,7 +8,7 @@ import myEpicNft from './utils/MakeEpicNFT.json';
 // Constants
 const TWITTER_HANDLE = 'dakshp07';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-const OPENSEA_LINK = ' https://testnets.opensea.io/collection/dakshnft-ihvavhwn3h';
+const OPENSEA_LINK = 'https://testnets.opensea.io/collection/dakshnft-vidmpxbpjt';
 const OpenSeaLogo='https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.svg';
 const MAX_SUPPLY=10;
 const CONTRACT_ADDRESS="0x448dc59FeeC045D40239cA3378b4EB55BdedB16B"; // contract address on testnet
