@@ -1,4 +1,5 @@
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-etherscan");
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -23,5 +24,8 @@ module.exports = {
       url: "ALCHEMY_API_KEY_URL",
       accounts: ["RINKEBY_PRIVATE_KEY"],
     }
+  },
+  etherscan: {
+    apiKey: "ETHER_SCAN_API_KEY",
   }
 };

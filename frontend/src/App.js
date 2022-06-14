@@ -10,7 +10,8 @@ const TWITTER_HANDLE = 'dakshp07';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 const OPENSEA_LINK = ' https://testnets.opensea.io/collection/dakshnft-ihvavhwn3h';
 const OpenSeaLogo='https://storage.googleapis.com/opensea-static/Logomark/Logomark-Blue.svg';
-const CONTRACT_ADDRESS="0x1574a1f0747b11B0E38BadA85e49aA0688fFba7b"; // contract address on testnet
+const MAX_SUPPLY=10;
+const CONTRACT_ADDRESS="0x448dc59FeeC045D40239cA3378b4EB55BdedB16B"; // contract address on testnet
 
 const App=()=>{
     // state variables to store user wallet address
@@ -173,7 +174,11 @@ const App=()=>{
               const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNft.abi, signer)
               const total = await connectedContract.getTotalNFTs() // call the fucntion from contract
               setTotalSupply(total.toNumber()) // set the value
-            } 
+            }
+            if(currentSupply===MAX_SUPPLY)
+            {
+                alert("Max Limit of NFTs reached, wait for other projects!");
+            }
             else 
             {
               console.log("Ethereum object doesn't exist!")
