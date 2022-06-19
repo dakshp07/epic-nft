@@ -1,5 +1,5 @@
 const main=async()=>{
-    const nftFactory=await hre.ethers.getContractFactory('MyEpicNFT'); // calling our contract by its name (*not file name, its the contract name) and compiling it and generate the necessary files we need to work with our contract under the artifacts directory.
+    const nftFactory=await hre.ethers.getContractFactory('MyEpicNFT'); // calling our contract by its name (*not file name, its the contract name) and compiling it and generate the necessary files we need to work with our contract under the artifacts directory in the root folder.
     const nftContract=await nftFactory.deploy(); // deploying it
 
     // What's happening here is Hardhat will create a local Ethereum network for us, but just for this contract. 
